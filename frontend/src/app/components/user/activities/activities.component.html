@@ -1,0 +1,53 @@
+<div class="row main-raw  " style="margin-right: 0; height: 100vh">
+  <div class="col-1">
+    <app-menu-lateral></app-menu-lateral>
+  </div>
+  <div class="col-10 mt-5">
+    <a class="btn btn-outline-dark btn-warning mb-2" routerLink="/user" ><fa-icon [icon]="faArrowLeft"></fa-icon> </a>
+
+    <div *ngIf="activities">
+      <div class=" d-flex flex-row flex-wrap justify-content-around ">
+        <div *ngFor="let activity of activities" class="card mb-4" style="width: 17rem; height: 13rem " [routerLink]="[activity.id]">
+          <img [src]="activity.imageType+','+activity.image" class="card-img-top" style="height: 9rem; border-radius: 20px 20px 0 0 " alt="...">
+          <div class="card-body">
+            <p class="card-text">
+              {{activity.title}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row  ">
+        <div class="col col-sm-6 col-xs-6 text-light">Page <b>{{page + 1}}</b> out of <b>{{totalPages}}</b> entries</div>
+        <div class="col-sm-6 col-xs-6 d-flex justify-content-end">
+          <ul class="pagination hidden-xs pull-right">
+            <li><button [disabled]="first" class="button-82-pushable" role="button" (click)="toPreviousPage()">
+              <span class="button-82-shadow"></span>
+              <span class="button-82-edge button-82-edge-pre"></span>
+              <span class="button-82-front btn-color-pre text">
+                                  Previous
+                                </span>
+            </button></li>
+
+
+            <li class="active text-light" style="margin: 1px 15px"> {{page + 1}} </li>
+
+            <li><button [disabled]="last" class="button-82-pushable" role="button" (click)="toNextPage()">
+              <span class="button-82-shadow"></span>
+              <span class="button-82-edge button-82-edge-next"></span>
+              <span class="button-82-front btn-color-next text" style="padding: 1px 15px">
+                                  Next
+                                </span>
+            </button></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!activities">
+      <h3>Coming soon more activities</h3>
+    </div>
+
+  </div>
+</div>
+

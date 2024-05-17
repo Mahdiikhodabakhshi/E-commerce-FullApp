@@ -1,0 +1,31 @@
+.btnLogin{
+  width: 8rem;
+  display: flex;
+  justify-content: center;
+  background-color: #FFB703;
+  border-radius: 161px 31px 31px 161px;
+  -webkit-border-radius: 161px 31px 31px 161px;
+  -moz-border-radius: 161px 31px 31px 161px;
+  color: black;
+  transition: width 0.5s ease;
+}
+
+.btnSignup{
+  width: 8rem;
+  display: flex;
+  justify-content: center;
+  background-color: #FFB703;
+  border-radius: 30px 160px 160px 30px;
+  -webkit-border-radius: 30px 160px 160px 30px;
+  -moz-border-radius: 30px 160px 160px 30px;
+  color: black;
+  transition: width 0.5s ease;
+}
+
+.bgnav{
+  background-color: #023047;
+}
+
+.btnSignup:hover , .btnLogin:hover{
+  width: 10rem;
+}

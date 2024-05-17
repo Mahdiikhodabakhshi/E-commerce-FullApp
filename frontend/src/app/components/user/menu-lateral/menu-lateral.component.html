@@ -1,0 +1,38 @@
+<div class="d-flex flex-column flex-shrink-0 bg-light menuPos" style="width: 4.5rem;">
+
+  <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+    <li class="nav-item">
+      <a [routerLink]="['/user' , 'home-search']" [class.active]="activeOp" routerLinkActive="active" [routerLinkActiveOptions]={exact:true} class="nav-link  py-3 border-bottom" aria-current="page" title="search for home" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+        <!--        <svg class="bi" width="24" height="24" role="img" aria-label="Home"><use xlink:href="#home"></use></svg>-->
+        <fa-icon [icon]="faHouse"></fa-icon>
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/user' , 'activities']" [class.active]="activityActive" routerLinkActive="active"  class="nav-link py-3 border-bottom" title="activities" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
+        <!--        <svg class="bi" width="24" height="24" role="img" aria-label="Dashboard"><use xlink:href="#speedometer2"></use></svg>-->
+        <fa-icon [icon]="faCompass"></fa-icon>
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/user','promotions']" [class.active]="promotionActive"  routerLinkActive="active" [routerLinkActiveOptions]={exact:true} class="nav-link py-3 border-bottom" title="discounts" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+        <fa-icon [icon]="faPercent"></fa-icon>
+      </a>
+    </li>
+
+    <li>
+      <a [routerLink]="['/user' , 'contactUs']" routerLinkActive="active" [routerLinkActiveOptions]={exact:true} class="nav-link py-3 border-bottom" title="Contact with us" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
+        <!--        <svg class="bi" width="24" height="24" role="img" aria-label="Products"><use xlink:href="#grid"></use></svg>-->
+        <fa-icon [icon]="faPersonCircleQuestion"></fa-icon>
+      </a>
+    </li>
+
+
+  </ul>
+  <div class=" border-top border-bottom" style="margin-top: 6rem">
+    <a (click)="logout()" class="d-flex logoutbtn align-items-center justify-content-center p-3 link-dark text-decoration-none " title="Logout"  aria-expanded="false">
+      <fa-icon [icon]="faRightFromBracket"></fa-icon>
+    </a>
+
+  </div>
+</div>
+

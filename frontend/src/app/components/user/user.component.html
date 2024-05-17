@@ -1,0 +1,43 @@
+<div class="row main-raw " style="margin-right: 0; height: 100vh">
+  <div class="col-2">
+    <app-menu-lateral></app-menu-lateral>
+  </div>
+  <div class="col-8 mt-5 ">
+    <div *ngIf="newActivities">
+      <div class="row " >
+        <div class="col d-flex flex-row justify-content-around">
+          <div *ngFor="let activity of newActivities" class="card" [routerLink]="['activities',activity.id]" style="width: 15rem; height: 15rem ">
+            <img [src]="activity.imageType+','+activity.image" class="card-img-top" style="height: 10rem ; border-radius: 20px 20px 0 0 " alt="...">
+            <div class="card-body">
+              <p class="card-text">
+                {{activity.title}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="!newActivities">
+      <h3>Coming soon  activities</h3>
+    </div>
+    <div *ngIf="newPromotions">
+      <div class="row mt-5">
+        <div class="col d-flex flex-row justify-content-around">
+          <div *ngFor="let promotion of newPromotions" [routerLink]="['promotions',promotion.id]" class="card" style="width: 15rem; height: 15rem ">
+            <img [src]="promotion.imageType+','+promotion.image" class="card-img-top" style="height: 10rem ;border-radius: 20px 20px 0 0 " alt="...">
+            <div class="card-body">
+              <p class="card-text">
+                {{promotion.title}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="!newPromotions">
+      <h3>Coming soon  activities</h3>
+    </div>
+
+
+  </div>
+</div>

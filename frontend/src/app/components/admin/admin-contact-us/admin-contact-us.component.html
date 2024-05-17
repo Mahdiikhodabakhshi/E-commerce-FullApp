@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col">
+    <section >
+      <div class="container py-4">
+
+
+
+          <button type="button" class="btn  btn-primary form-control my-3  " data-bs-toggle="modal" data-bs-target="#contactFilterModal">
+            Filtros
+          </button>
+
+
+        <ng-container *ngFor="let contact of contactUsList">
+          <article [ngClass]="'postcard dark blue' ">
+
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a >{{ contact.subject | titlecase }}</a></h1>
+              <div class="postcard__subtitle small">
+                <time>
+                  <i class="fas fa-calendar-alt mr-2"></i>{{ contact.sendDate | date }}
+                </time>
+              </div>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">{{ contact.message  | titlecase}}</div>
+
+              <h4 class="ms-auto align-self-center">
+                <fa-icon [icon]="faTrashCan" (click)="removeContactUs(contact.id)" class="text-danger"></fa-icon></h4>
+            </div>
+
+          </article>
+        </ng-container>
+
+      </div>
+    </section>
+    <div class="row  ">
+      <div class="col col-sm-6 col-xs-6 text-light">Page <b>{{page + 1}}</b> out of <b>{{totalPages}}</b> entries</div>
+      <div class="col-sm-6 col-xs-6 d-flex justify-content-end">
+        <ul class="pagination hidden-xs pull-right">
+          <li><button [disabled]="first" class="btn btn-danger" role="button" (click)="toPreviousPage()">
+            Previous
+          </button></li>
+
+
+          <li class="active text-light" style="margin: 1px 15px"> {{page + 1}} </li>
+
+          <li><button [disabled]="last" class="btn btn-success" role="button" (click)="toNextPage()">
+            next
+          </button></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!--  modal del busqueda -->
+<div class="modal fade" id="contactFilterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Filtros</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-floating mb-3">
+          <input class="form-control" type="text" [(ngModel)]="subjectFilter" name="subject" id="subjectFilter" placeholder="subject">
+          <label for="subjectFilter">Subject</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input class="form-control" type="text" [(ngModel)]="messageFilter" name="message" id="messageFilter" placeholder="message">
+          <label for="messageFilter">Message</label>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-outline-warning"  (click)="cleanSearch()">Limpiar la busqueda</button>
+        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="searchByFilters()">Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  modal del busqueda -->

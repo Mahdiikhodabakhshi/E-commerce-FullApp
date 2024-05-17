@@ -1,0 +1,139 @@
+<div class="row" style="margin-right: 0">
+  <div class="col-1">
+    <app-menu-lateral [activeOp]="true"></app-menu-lateral>
+  </div>
+
+  <div class="col-9 d-flex  flex-column " style="margin-top: 4rem">
+    <div class="row h-100">
+      <div class="col-7 ms-5">
+        <img [src]="homeInfo.imageType+','+homeInfo.image" class="card-img-top" alt="...">
+        <div class="mt-3 homeInfo ps-5 pt-3 pb-2">
+          <h3>{{homeInfo.title |titlecase}}</h3>
+          <p>{{homeInfo.description |titlecase}}</p>
+          <p>{{homeInfo.price | currency:"EUR":"€":'1.2':'es-ES'}}</p>
+          <small>{{homeInfo.uploadDate | date}}</small>
+        </div>
+      </div>
+      <div class="col-4 w-auto">
+        <p class=" text-center moreInfo">Do you need more information ?!<br>
+
+          click on button below <br> <a data-bs-toggle="modal" data-bs-target="#miModal" class="btn btn-primary mt-5 mb-2">Contact Us</a>
+        </p>
+      </div>
+    </div>
+<!--    <div class="card mb-3" style="max-width: 45rem">-->
+<!--      <img [src]="homeInfo.imageType+homeInfo.image" class="card-img-top" alt="...">-->
+<!--      <div class="card-body">-->
+<!--        <h5 class="card-title">{{homeInfo.title}}</h5>-->
+<!--        <p class="card-text">{{homeInfo.description |titlecase}}</p>-->
+<!--        <p class="card-text">Location:{{homeInfo.location |uppercase}}</p>-->
+
+<!--        <p class="card-text"><small class="text-body-secondary">{{homeInfo.price | currency:"EUR":"€":'1.2':'es-ES'}}</small></p>-->
+
+<!--      </div>-->
+<!--      <div class="card-footer">{{homeInfo.uploadDate | date}}</div>-->
+<!--    </div>-->
+<!--    <div class="flex-row d-flex" >-->
+<!--      <img [src]="homeInfo.imageType+homeInfo.image" class="card-img-top" alt="...">-->
+<!--      <p class=" text-center moreInfo">Do you need more information ?!<br>-->
+
+<!--        click on button below <br> <a class="btn btn-primary mt-5">Contact Us</a> </p>-->
+<!--    </div>-->
+<!--    <div class="mt-3 homeInfo ps-5 pt-3 pb-2">-->
+<!--      <h3>{{homeInfo.title |titlecase}}</h3>-->
+<!--      <p>{{homeInfo.description |titlecase}}</p>-->
+<!--      <p>{{homeInfo.price | currency:"EUR":"€":'1.2':'es-ES'}}</p>-->
+<!--      <small>{{homeInfo.uploadDate | date}}</small>-->
+<!--    </div>-->
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="miModal"
+     tabindex="-1" aria-labelledby="miModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="miModalLabel">
+          Contact Form</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+
+      </div>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit(homeInfo.id)">
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <!-- Indicamos con el formcontrolname el atributo a incluir-->
+            <input formControlName="name"
+                   type="text" class="form-control"
+                   id="name" value="{{name}}"
+                   placeholder="Name">
+            <label for="name">
+              Name
+            </label>
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-warning" role="alert">
+              <div *ngIf="name.errors?.['required'] || name.errors?.['noWhite']">
+                Name is obligatory
+              </div>
+
+
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="phone"
+                   type="number" class="form-control"
+                   id="phone" value="{{phone}}"
+                   placeholder="Phone">
+            <label for="phone">
+              Phone
+            </label>
+            <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-warning" role="alert">
+              <div *ngIf="phone.errors?.['required'] || phone.errors?.['noWhite']">
+                phone number is obligatory
+              </div>
+
+
+            </div>
+
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="email"
+                   type="email" class="form-control"
+                   id="email" value="{{email}}"
+                   placeholder="Email">
+            <label for="email">
+              Email</label>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-warning" role="alert">
+              <div *ngIf="email.errors?.['required'] || email.errors?.['noWhite']">
+                email is obligatory
+              </div>
+              <div *ngIf="email.errors?.['email'] ">
+                email format is not correct
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger"
+                  data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-success"
+               [disabled]="contactForm.invalid"    data-bs-dismiss="modal">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

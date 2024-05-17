@@ -1,0 +1,29 @@
+.row{
+  height: 100vh;
+  background: #003566;
+}
+img{
+
+  width: 100%;
+  border-radius: 20px;
+}
+
+
+.homeInfo{
+  background: rgba(255, 255, 255, 0.50);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.2px);
+  -webkit-backdrop-filter: blur(9.2px);
+}
+
+.moreInfo{
+  padding: 2rem 2rem 0;
+  margin-left: 2rem;
+  margin-top: 10rem;
+  background: rgba(255, 243, 10, 0.78);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.1px);
+  -webkit-backdrop-filter: blur(9.1px);
+}

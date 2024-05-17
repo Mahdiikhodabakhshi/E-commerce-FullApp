@@ -1,0 +1,10 @@
+footer{
+  color: white;
+
+  margin-top: 10.7rem !important;
+}
+
+footer li {
+  font-size: large;
+  font-weight: bold;
+}

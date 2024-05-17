@@ -1,0 +1,82 @@
+<div class="padre " >
+  <div class="container pt-5" >
+
+    <h2 class="text-center text-light">
+      Admin Page
+    </h2>
+
+
+    <a class="btn btn-outline-dark btn-warning mb-2" (click)="logout()" ><fa-icon [icon]="faArrowLeft"> </fa-icon> Logout </a>
+
+
+    <ul class="nav nav-tabs justify-content-center bg-danger-subtle"
+        id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab"
+           data-bs-toggle="tab"
+           href="#home" role="tab" aria-controls="home"
+           aria-selected="true">
+          Home
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" id="activity-tab"
+           data-bs-toggle="tab"
+           href="#activity" role="tab"
+           aria-controls="activity"
+           aria-selected="false">
+          Activity
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab"
+           data-bs-toggle="tab"
+           href="#contact" role="tab"
+           aria-controls="contact"
+           aria-selected="false">
+          Contact Us
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="#promotion" id="promotions-tab"
+           data-bs-toggle="tab"
+           role="tab"
+           aria-controls="promotion"
+           aria-selected="false">
+          Promotion
+        </a>
+      </li>
+
+    </ul>
+
+
+    <div class="tab-content mt-3" id="myTabContent">
+
+      <div class="tab-pane fade show active" id="home"
+           role="tabpanel" aria-labelledby="home-tab">
+        <app-admin-home></app-admin-home>
+      </div>
+
+
+      <div class="tab-pane fade" id="activity" role="tabpanel"
+           aria-labelledby="activity-tab-tab">
+        <app-admin-activity></app-admin-activity>
+      </div>
+
+
+      <div class="tab-pane fade" id="contact" role="tabpanel"
+           aria-labelledby="contact-tab">
+        <app-admin-contact-us></app-admin-contact-us>
+      </div>
+
+      <div class="tab-pane fade" id="promotion" role="tabpanel"
+           aria-labelledby="promotions-tab">
+        <app-admin-promotion></app-admin-promotion>
+      </div>
+    </div>
+  </div>
+
+</div>

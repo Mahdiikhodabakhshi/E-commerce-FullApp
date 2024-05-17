@@ -1,0 +1,121 @@
+<div class="row dark" style="margin-right: 0 ">
+  <div class="col-1">
+    <app-menu-lateral></app-menu-lateral>
+  </div>
+  <div class="col-10">
+
+    <div *ngIf="homeList">
+      <section class="dark">
+        <div class="container py-4">
+          <h1 class="h1 text-center" id="pageHeaderTitle">Homes</h1>
+          <a class="btn btn-outline-dark btn-warning mb-2" routerLink="/user" ><fa-icon [icon]="faArrowLeft"></fa-icon> </a>
+
+          <button type="button" class="btn btn-primary form-control my-3  " data-bs-toggle="modal" data-bs-target="#filterModal">
+            Filtros
+          </button>
+          <ng-container *ngFor="let home of homeList">
+            <article [ngClass]="'postcard dark blue' ">
+              <a class="postcard__img_link" [routerLink]="[home.id]">
+                <img class="postcard__img" [src]="home.imageType+','+home.image" alt="Image Title" />
+              </a>
+              <div class="postcard__text">
+                <h1 class="postcard__title blue"><a [routerLink]="[home.id]">{{ home.title | titlecase }}</a></h1>
+                <div class="postcard__subtitle small">
+                  <time>
+                    <i class="fas fa-calendar-alt mr-2"></i>{{ home.uploadDate | date }}
+                  </time>
+                </div>
+                <div class="postcard__bar"></div>
+                <div class="postcard__preview-txt">{{ home.description  | titlecase}}</div>
+                <div>{{home.price | currency:"EUR":"€":'1.2':'es-ES'}} /Mes</div>
+
+              </div>
+            </article>
+          </ng-container>
+
+        </div>
+      </section>
+      <div class="row  ">
+        <div class="col col-sm-6 col-xs-6 text-light">Page <b>{{page + 1}}</b> out of <b>{{totalPages}}</b> entries</div>
+        <div class="col-sm-6 col-xs-6 d-flex justify-content-end">
+          <ul class="pagination hidden-xs pull-right">
+            <li><button [disabled]="first" class="button-82-pushable" role="button" (click)="toPreviousPage()">
+              <span class="button-82-shadow"></span>
+              <span class="button-82-edge button-82-edge-pre"></span>
+              <span class="button-82-front btn-color-pre text">
+                                  Previous
+                                </span>
+            </button></li>
+
+
+            <li class="active text-light" style="margin: 1px 15px"> {{page + 1}} </li>
+
+            <li><button [disabled]="last" class="button-82-pushable" role="button" (click)="toNextPage()">
+              <span class="button-82-shadow"></span>
+              <span class="button-82-edge button-82-edge-next"></span>
+              <span class="button-82-front btn-color-next text" style="padding: 1px 15px">
+                                  Next
+                                </span>
+            </button></li>
+          </ul>
+
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="!homeList">
+      Coming soon we will add homes
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+
+<!--  modal del busqueda -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Filtros</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class=" mb-3 ">
+<!--          <input class="form-control" type="text" [(ngModel)]="nameFilter" name="Nombre" id="Nombre" placeholder="Nombre">-->
+<!--          <label for="Nombre">Por Nombre</label>-->
+          <p CLASS="pe-5 d-inline">Home Type</p>
+           <label for="room" >
+             <input class="form-label" type="radio" id="room" name="houseType" value="ROOM" [(ngModel)]="houseTypeFilter" >
+             <span class="pe-3">Room</span>
+           </label>
+           <label for="home">
+             <input class="form-label" type="radio" id="home" name="houseType" value="HOUSE" [(ngModel)]="houseTypeFilter" >
+             <span>Home</span></label>
+        </div>
+        <div class="form-floating mb-3">
+          <input class="form-control" type="number" [(ngModel)]="minPriceFilter" name="minPrice" id="minPrice" placeholder="Min price">
+          <label for="minPrice">Min price</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input class="form-control" type="number" [(ngModel)]="maxPriceFilter" name="maxPrice" id="maxPrice" placeholder="Max price">
+          <label for="maxPrice">Max price</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input class="form-control" type="text" [(ngModel)]="locationFilter" name="maxPrice" id="location" placeholder="Location">
+          <label for="location">Location</label>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-outline-warning"  (click)="cleanSearch()">Limpiar la busqueda</button>
+        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="searchByFilters()">Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  modal del busqueda -->

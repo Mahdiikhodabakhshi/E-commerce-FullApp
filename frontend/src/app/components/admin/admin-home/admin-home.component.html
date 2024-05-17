@@ -1,0 +1,252 @@
+<div class="row">
+  <div class="col">
+    <section >
+      <div class="container py-4">
+
+        <div class="d-flex">
+          <button type="button" (click)="newItem()" class="btn  btn-warning form-control my-3  " data-bs-toggle="modal" data-bs-target="#itemModal">
+            Add item
+          </button>
+          <button type="button" class="btn  btn-primary form-control my-3  " data-bs-toggle="modal" data-bs-target="#filterModal">
+            Filtros
+          </button>
+        </div>
+
+        <ng-container *ngFor="let home of homeList">
+          <article [ngClass]="'postcard dark blue' ">
+            <a class="postcard__img_link"  >
+              <img class="postcard__img" [src]="home.imageType+','+home.image" alt="Image Title" />
+            </a>
+            <div class="postcard__text">
+              <h1 class="postcard__title blue"><a (click)="loadItem(home)">{{ home.title | titlecase }}</a></h1>
+              <div class="postcard__subtitle small">
+                <time>
+                  <i class="fas fa-calendar-alt mr-2"></i>{{ home.uploadDate | date }}
+                </time>
+              </div>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">{{ home.description  | titlecase}}</div>
+              <div class="postcard__preview-txt">{{ home.location  | titlecase}}</div>
+              <div>{{home.price | currency:"EUR":"€":'1.2':'es-ES'}} /Mes</div>
+              <h4 class="ms-auto align-self-center">
+                <fa-icon [icon]="faPenToSquare" data-bs-toggle="modal" data-bs-target="#itemModal" (click)="loadItem(home)" class="px-3 text-warning"> </fa-icon>
+                <fa-icon [icon]="faTrashCan"  (click)="removeHome(home.id)" class="text-danger"></fa-icon></h4>
+            </div>
+
+          </article>
+        </ng-container>
+
+      </div>
+    </section>
+    <div class="row  ">
+      <div class="col col-sm-6 col-xs-6 text-light">Page <b>{{page + 1}}</b> out of <b>{{totalPages}}</b> entries</div>
+      <div class="col-sm-6 col-xs-6 d-flex justify-content-end">
+        <ul class="pagination hidden-xs pull-right">
+          <li><button [disabled]="first" class="btn btn-danger" role="button" (click)="toPreviousPage()">
+          Previous
+          </button></li>
+
+
+          <li class="active text-light" style="margin: 1px 15px"> {{page + 1}} </li>
+
+          <li><button [disabled]="last" class="btn btn-success" role="button" (click)="toNextPage()">
+          next
+          </button></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!--  modal del busqueda -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Filtros</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class=" mb-3 ">
+          <!--          <input class="form-control" type="text" [(ngModel)]="nameFilter" name="Nombre" id="Nombre" placeholder="Nombre">-->
+          <!--          <label for="Nombre">Por Nombre</label>-->
+          <p CLASS="pe-5 d-inline">Home Type</p>
+          <label for="room" >
+            <input class="form-label" type="radio" id="room" name="houseType" value="ROOM" [(ngModel)]="houseTypeFilter" >
+            <span class="pe-3">Room</span>
+          </label>
+          <label for="home">
+            <input class="form-label" type="radio" id="home" name="houseType" value="HOUSE" [(ngModel)]="houseTypeFilter" >
+            <span>Home</span></label>
+        </div>
+        <div class="form-floating mb-3">
+          <input class="form-control" type="number" [(ngModel)]="minPriceFilter" name="minPrice" id="minPrice" placeholder="Min price">
+          <label for="minPrice">Min price</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input class="form-control" type="number" [(ngModel)]="maxPriceFilter" name="maxPrice" id="maxPrice" placeholder="Max price">
+          <label for="maxPrice">Max price</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input class="form-control" type="text" [(ngModel)]="locationFilter" name="location" id="locationFilter" placeholder="Location">
+          <label for="locationFilter">Location</label>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-outline-warning"  (click)="cleanSearch()">Limpiar la busqueda</button>
+        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="searchByFilters()">Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  modal del busqueda -->
+
+<!-- modal del item-->
+
+
+<div class="modal fade" id="itemModal"
+     tabindex="-1" aria-labelledby="miModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="miModalLabel">
+          {{edit?'Edit Home with Id: '+id : 'New Home'}}</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+
+      </div>
+      <form [formGroup]="homeForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+
+          <div class="form-floating mb-3">
+            <!-- Indicamos con el formcontrolname el atributo a incluir-->
+            <input formControlName="title"
+                   type="text" class="form-control"
+                   id="title" value="{{title}}"
+                   placeholder="Title">
+            <label for="title">
+              Title</label>
+            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger" role="alert">
+              <div *ngIf="title.errors?.['required'] || title.errors?.['noWhite']">
+                Title is obligatory
+              </div>
+
+
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+
+            <textarea formControlName="description" rows="7"  class="form-control" id="description" value="{{description}}"> </textarea>
+              <label for="description">Description</label>
+            <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger" role="alert">
+              <div *ngIf="description.errors?.['required'] || description.errors?.['noWhite']">
+                Description is obligatory
+              </div>
+
+
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="location"
+                   type="text" class="form-control"
+                   id="location" value="{{location}}"
+                   placeholder="location">
+            <label for="location">
+              Location</label>
+            <div *ngIf="location.invalid && (location.dirty || location.touched)" class="alert alert-danger" role="alert">
+              <div *ngIf="location.errors?.['required'] || location.errors?.['noWhite']">
+                Location is obligatory
+              </div>
+
+
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="price"
+                   type="number" class="form-control"
+                   id="price" value="{{price}}"
+                   placeholder="price">
+            <label for="price">
+              Price</label>
+            <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger" role="alert">
+              <div *ngIf="price.errors?.['required'] || price.errors?.['min']">
+                Price is obligatory and should be positive
+              </div>
+
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-8">
+              <div class=" mb-3">
+                <label for="formFile" class="form-label" >Image</label>
+                <input class="form-control" type="file" id="formFile" (change)="includeImageInItem($event);">
+<!--                <label class="form-label" for="image">-->
+<!--                  Image</label>-->
+<!--                <input-->
+<!--                       type="file" class="form-control"-->
+<!--                       id="image" (change)="includeImageInItem($event);"-->
+<!--                       placeholder="Image">-->
+
+              </div>
+              <!-- Previsualizador de la imagen introducida -->
+            </div>
+            <div class="col-4" *ngIf="image && imageType">
+              <img src="{{imageType+','+image }}"
+                   alt="..." style="width: 100px;">
+            </div>
+            <div class="col-4" *ngIf="!image || !imageType">
+              <img src="assets/images/not.png"
+                   alt="..." style="width: 100px;">
+            </div>
+          </div>
+
+
+            <label for="Select">Home Type</label>
+            <select class="form-select" id="Select"
+                    aria-label="homeType"
+                    formControlName="homeType">
+              <option value="HOUSE"> House </option>
+              <option value="ROOM"> Room </option>
+            </select>
+
+<!--          <div *ngIf="!editar">-->
+<!--            <label for="newSelect">Genres</label>-->
+<!--            <select class="form-select" id="newSelect"-->
+<!--                    aria-label="Genres" multiple-->
+<!--                    formControlName="genres">-->
+<!--              <option *ngFor="let gen of genres"-->
+<!--                      [value]="gen">-->
+<!--                {{gen}}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+                  data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary"
+                  data-bs-dismiss="modal" [disabled]="homeForm.invalid">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- modal del item-->
+
+
+

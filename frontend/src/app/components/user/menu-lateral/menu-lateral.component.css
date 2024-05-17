@@ -1,0 +1,11 @@
+.menuPos{
+  height: 34rem;
+  margin-top: 3rem;
+  padding: 3rem 0;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.logoutbtn:hover{
+  cursor: pointer;
+}
